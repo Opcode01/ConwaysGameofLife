@@ -2,7 +2,10 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
-
+/*
+ * Custom generic button class.
+ * Like a JButton, but not...
+ */
 public class AButton extends JButton implements ActionListener{
 
 	ImageIcon On, Off;
@@ -15,6 +18,7 @@ public class AButton extends JButton implements ActionListener{
 		Off = offImg;
 		this.addActionListener(this);
 	}
+	
 	//Constructor can be used with default images as well
 	public AButton()
 	{

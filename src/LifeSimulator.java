@@ -29,6 +29,11 @@ public class LifeSimulator implements Runnable {
 			}
 	}
 	
+	/*
+	 * NOTICE: There is a bug with this Simulator() method. It doesn't simulate correctly
+	 * We need to update the entire board at once instead of on a cell by cell basis.
+	 */
+	
 	//The really complicated method that runs the logic
 	private void Simulator(){
 		
@@ -80,7 +85,7 @@ public class LifeSimulator implements Runnable {
 						AliveCells++;
 						//JOptionPane.showMessageDialog(null, "Button state true");
 					}
-				}catch(Exception e){
+				}catch(Exception ArrayIndexOutOfBounds){
 				//If we get that exception, just ignore it.	
 				}
 			}
