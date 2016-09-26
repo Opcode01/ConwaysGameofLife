@@ -12,14 +12,13 @@ public class MainWindow{
 
 	private JFrame frame;
 	public JPanel panel = new JPanel();
-
+	
 	ImageIcon play = new ImageIcon(this.getClass().getResource("Play Button.png"));
 	ImageIcon pause = new ImageIcon(this.getClass().getResource("Pause Button.png"));
 	
+	//This is the grid that everything happens on.
 	AButton buttons[][] = new AButton[25][25];
 	AButton PlayPauseButton = new AButton(pause, play);
-	
-	Thread Brain = new Thread(new LifeSimulator(1000, buttons));
 	
 	/**
 	 * Launch the application.
@@ -29,7 +28,7 @@ public class MainWindow{
 			public void run() {
 				try {
 					MainWindow window = new MainWindow();
-					window.frame.setVisible(true);		
+					window.frame.setVisible(true);	
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,12 +56,16 @@ public class MainWindow{
 		frame.setTitle("Conway's Game of Life"); 
 		//frame.setResizable(false);
 		
+		//Initialize all the buttons. Default 25x25 grid
+			//TO-DO: Allow user to resize grid to personal liking
 		for(int i = 0; i < 25; i++){
 			for(int j = 0; j < 25; j++){
 				buttons[i][j] = new AButton();
 				panel.add(buttons[i][j]);
 			}
 		}
+		
+		//Setting up graphical elements...
 		panel.setLayout(new GridLayout(25, 25));
 		frame.getContentPane().add(panel);
 		
@@ -77,28 +80,13 @@ public class MainWindow{
 
 		frame.setVisible(true);
 		
-		Brain.start();
+		//Initialize the ThreadHandler to run once every 100 milliseconds
+		Timer Update = new Timer();
+		ThreadHandler t = new ThreadHandler(PlayPauseButton, buttons);
+		Update.schedule(t, 1, 100);
 		
 	}
 	
-	public void getPlayPauseState()
-	{
-		if(PlayPauseButton.getButtonState() == true)
-		{
-			try{
-				Brain.notify();
-			}
-			catch(Exception e){
-			}
-		}
-		else if(PlayPauseButton.getButtonState() == false)
-		{
-			try {
-				Brain.wait();
-			} catch (InterruptedException e) {
-				Brain.notify();
-			}
-		}
-	}
+	
 	
 }//End of class

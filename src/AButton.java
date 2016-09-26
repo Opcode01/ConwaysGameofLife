@@ -47,4 +47,5 @@ public class AButton extends JButton implements ActionListener{
 		else if(setValue == false)
 			setIcon(Off);
 	}
+	
 }
