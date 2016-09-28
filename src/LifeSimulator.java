@@ -9,18 +9,21 @@ Designed to run in a thread
 public class LifeSimulator implements Runnable {
 	
 	int time;
-	AButton buttons[][];
+	AButton buttons[][] = new AButton[25][25];
+	AButton MainButtons[][];
 	
 	public LifeSimulator(int sleepTime, AButton array[][])
 	{
 		//Get what we need from the ThreadHandler, which gets it from MainWindow
 		time = sleepTime;
-		buttons = array;
+		MainButtons = array;
 	}
 	
 	public void run(){
 			try {
-				Simulator();
+				initCopyButtons();
+				copyBoard(MainButtons);
+				Simulator(MainButtons);
 				Thread.sleep(time);
 				//TO-DO: Add functionality so the user can adjust the speed of the simulation using
 				//the time = sleepTime variable
@@ -30,12 +33,29 @@ public class LifeSimulator implements Runnable {
 	}
 	
 	/*
-	 * NOTICE: There is a bug with this Simulator() method. It doesn't simulate correctly
-	 * We need to update the entire board at once instead of on a cell by cell basis.
+	 * BUG FIXED 9/28/16: Created a second dummy array of buttons. The system calculates using the buttons
+	 * array, but all changes are made to the main buttons array that is passed in from the system. (Also
+	 * known as MainButtons locally).
 	 */
+	private void initCopyButtons(){
+		for(int i = 0; i < 25; i++){
+			for(int j = 0; j < 25; j++){
+				buttons[i][j] = new AButton();
+			}
+		}
+	}
+	
+	private void copyBoard(AButton array[][])
+	{
+		for(int i = 0; i < 25; i++){
+			for(int j = 0; j < 25; j++){
+				buttons[i][j].setButtonState(array[i][j].getButtonState());
+			}
+		}
+	}
 	
 	//The really complicated method that runs the logic
-	private void Simulator(){
+	private void Simulator(AButton array[][] ){
 		
 		boolean selfCheck;	//State of the button we are checking	
 		int aliveNeighbors = 0;	//Value we get from the checkButtons function
@@ -52,10 +72,10 @@ public class LifeSimulator implements Runnable {
 						System.out.println(aliveNeighbors);
 						//Live cell with less than 2 neighbors dies
 						if(aliveNeighbors < 2)
-							buttons[i][j].setButtonState(false);
+							array[i][j].setButtonState(false);
 						//Live cell with more than 3 neighbors dies
 						else if(aliveNeighbors > 3)
-							buttons[i][j].setButtonState(false);
+							array[i][j].setButtonState(false);
 						//If live cell with 2 or 3 neighbors, do nothing
 						
 					}	
@@ -64,7 +84,7 @@ public class LifeSimulator implements Runnable {
 						aliveNeighbors = checkButtons(i,j);		//This time, it doesn't matter if we count ourselves
 						System.out.println(aliveNeighbors);
 						if(aliveNeighbors == 3)
-							buttons[i][j].setButtonState(true);
+							array[i][j].setButtonState(true);
 					}	
 				}
 			}

@@ -20,6 +20,8 @@ public class ThreadHandler extends TimerTask {
 	//Run Method runs whenever the timer calls it, which is once every 100 ms
 	public void run() {
 		try{
+			Brain = new Thread(new LifeSimulator(100, buttonsArray));	
+			Brain.start();
 			getPlayPauseState();
 		}catch(Exception e){
 			e.printStackTrace();
@@ -29,17 +31,19 @@ public class ThreadHandler extends TimerTask {
 	//We check the PlayPause button (theMagicButton) 
 	private void getPlayPauseState()
 	{
-		if(theMagicButton.getButtonState() == true)
+		if(theMagicButton.getButtonState() == true && Brain.isAlive() == false)
 		{
 			//If the button is true, we start a new simulation thread
-			Brain = new Thread(new LifeSimulator(100, buttonsArray));	
+			//Brain = new Thread(new LifeSimulator(100, buttonsArray));	
 			Brain.start();
 		}
 		else if(theMagicButton.getButtonState() == false)
 		{
 			//If its false, we stop that thread
 				//TO-DO: Find a better solution that doesn't require using a deprecated method?
-			Brain.stop();
+			if(Brain.isAlive()){
+				Brain.stop();
+			}
 		}	
 	}
 }
