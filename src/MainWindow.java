@@ -13,37 +13,22 @@ public class MainWindow{
 	private JFrame frame;
 	public JPanel panel = new JPanel();
 	
+	public static int rows;
+	public static int columns;
+	
 	ImageIcon play = new ImageIcon(this.getClass().getResource("Play Button.png"));
 	ImageIcon pause = new ImageIcon(this.getClass().getResource("Pause Button.png"));
 	
-	//This is the grid that everything happens on.
-	AButton buttons[][] = new AButton[25][25];
 	AButton PlayPauseButton = new AButton(pause, play);
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainWindow window = new MainWindow();
-					window.frame.setVisible(true);	
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				
-			}
-		});
-		
-	}
 
 	/**
 	 * Create the application.
 	 */
-	public MainWindow() {
+	public MainWindow(int par1, int par2) {
+		rows = par1;
+		columns = par2;
 		initialize();
+		frame.setVisible(true);
 	}
 	
 	/**
@@ -54,19 +39,21 @@ public class MainWindow{
 		frame.setSize(800, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setTitle("Conway's Game of Life"); 
-		//frame.setResizable(false);
 		
+		//This is the grid that everything happens on.
+		AButton buttons[][] = new AButton[rows][columns];
+				
 		//Initialize all the buttons. Default 25x25 grid
 			//TO-DO: Allow user to resize grid to personal liking
-		for(int i = 0; i < 25; i++){
-			for(int j = 0; j < 25; j++){
+		for(int i = 0; i < rows; i++){
+			for(int j = 0; j < columns; j++){
 				buttons[i][j] = new AButton();
 				panel.add(buttons[i][j]);
 			}
 		}
 		
 		//Setting up graphical elements...
-		panel.setLayout(new GridLayout(25, 25));
+		panel.setLayout(new GridLayout(rows, columns));
 		frame.getContentPane().add(panel);
 		
 		JSeparator separator = new JSeparator();
@@ -86,7 +73,4 @@ public class MainWindow{
 		Update.schedule(t, 1, 100);
 		
 	}
-	
-	
-	
 }//End of class

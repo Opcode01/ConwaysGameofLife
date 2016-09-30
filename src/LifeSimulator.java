@@ -8,8 +8,10 @@ Designed to run in a thread
 
 public class LifeSimulator implements Runnable {
 	
+	int rows = MainWindow.rows;
+	int cols = MainWindow.columns;
 	int time;
-	AButton buttons[][] = new AButton[25][25];
+	AButton buttons[][] = new AButton[MainWindow.rows][MainWindow.columns];
 	AButton MainButtons[][];
 	
 	public LifeSimulator(int sleepTime, AButton array[][])
@@ -38,8 +40,8 @@ public class LifeSimulator implements Runnable {
 	 * known as MainButtons locally).
 	 */
 	private void initCopyButtons(){
-		for(int i = 0; i < 25; i++){
-			for(int j = 0; j < 25; j++){
+		for(int i = 0; i < rows; i++){
+			for(int j = 0; j < cols; j++){
 				buttons[i][j] = new AButton();
 			}
 		}
@@ -47,8 +49,8 @@ public class LifeSimulator implements Runnable {
 	
 	private void copyBoard(AButton array[][])
 	{
-		for(int i = 0; i < 25; i++){
-			for(int j = 0; j < 25; j++){
+		for(int i = 0; i < rows; i++){
+			for(int j = 0; j < cols; j++){
 				buttons[i][j].setButtonState(array[i][j].getButtonState());
 			}
 		}
@@ -60,9 +62,9 @@ public class LifeSimulator implements Runnable {
 		boolean selfCheck;	//State of the button we are checking	
 		int aliveNeighbors = 0;	//Value we get from the checkButtons function
 		
-			for(int i = 0; i < 25; i++ )
+			for(int i = 0; i < rows; i++ )
 			{
-				for(int j = 0; j < 25; j++)
+				for(int j = 0; j < cols; j++)
 				{
 					//Check the state of this AButton
 					selfCheck = buttons[i][j].getButtonState();
