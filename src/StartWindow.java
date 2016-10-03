@@ -14,9 +14,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JTextField;
-import javax.swing.DropMode;
-import java.awt.TextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
@@ -75,13 +72,13 @@ public class StartWindow extends JFrame {
 		contentPanel.add(lblWidth);
 		
 		JSpinner lengthField = new JSpinner();
-		lengthField.setModel(new SpinnerNumberModel(0, 0, 50, 1));	//JSpinner model set to a maximum int of 50
+		lengthField.setModel(new SpinnerNumberModel(0, 0, 100, 1));	//JSpinner model set to a maximum int of 100
 		lengthField.setBounds(138, 98, 42, 39);
 		contentPanel.add(lengthField);
 		
 		
 		JSpinner widthField = new JSpinner();
-		widthField.setModel(new SpinnerNumberModel(0, 0, 50, 1));	//JSpinner model set to a maximum int of 50
+		widthField.setModel(new SpinnerNumberModel(0, 0, 100, 1));	//JSpinner model set to a maximum int of 100
 		widthField.setBounds(138, 148, 42, 39);
 		contentPanel.add(widthField);
 		

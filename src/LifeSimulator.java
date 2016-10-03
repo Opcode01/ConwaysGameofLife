@@ -1,5 +1,3 @@
-import java.util.*;
-
 /*
 This class handles all the logic for the game of life simulator. 
 Its the 'Brain' of the game of life. 
@@ -14,10 +12,9 @@ public class LifeSimulator implements Runnable {
 	AButton buttons[][] = new AButton[MainWindow.rows][MainWindow.columns];
 	AButton MainButtons[][];
 	
-	public LifeSimulator(int sleepTime, AButton array[][])
+	public LifeSimulator(AButton array[][])
 	{
 		//Get what we need from the ThreadHandler, which gets it from MainWindow
-		time = sleepTime;
 		MainButtons = array;
 	}
 	
@@ -26,10 +23,7 @@ public class LifeSimulator implements Runnable {
 				initCopyButtons();
 				copyBoard(MainButtons);
 				Simulator(MainButtons);
-				Thread.sleep(time);
-				//TO-DO: Add functionality so the user can adjust the speed of the simulation using
-				//the time = sleepTime variable
-			} catch (InterruptedException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 	}
